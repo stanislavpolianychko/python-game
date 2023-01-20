@@ -1,6 +1,7 @@
 import pygame
 import player
-import constants
+import constants as const
+import background
 
 
 class Window:
@@ -14,13 +15,18 @@ class Window:
         if icon:
             pygame.display.set_icon(icon)
 
-        # player coordinates in win
-        self.player = player.Player((10, 20), (size[0]//2, size[1]//2), 5, constants.COLOR_BLUE)
+        # background image set
+        self.bg = background.Background(const.BACK_GROUND_IMAGE_PATH)
 
+        # player coordinates in win
+        self.player = player.Player((const.PLAYER_X, const.PLAYER_Y), const.PLAYER_SPEED, const.PLAYER_IMAGE_PATH)
+
+    # refresh all screen updates
     def refresh(self):
         pygame.display.update()
-        self.surface.fill(constants.COLOR_BLACK)
+        self.bg.set_background(self.surface)
 
+    # main loop of the window
     def start_mainloop(self, fps):
         clock = pygame.time.Clock()
 

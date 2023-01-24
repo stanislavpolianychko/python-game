@@ -1,15 +1,12 @@
 import random
 import pygame
 import player
-import constants as const
 import background
-import field_column
 import barrier
+from configuration.config import config
 
 
 class Window:
-    columns = [field_column.Column(num) for num in range(0, const.COLUMNS_COUNT-1)]
-
     def __init__(self, size: (int, int), label: str, icon=None):
         # initialise pygame library
         pygame.init()
@@ -19,57 +16,33 @@ class Window:
         pygame.display.set_caption(label)
         if icon:
             pygame.display.set_icon(icon)
-
         # background image set
-        self.bg = background.Background(const.BACK_GROUND_IMAGE_PATH)
-
+        self.bg = background.Background(config.window['background_image'])
         # player coordinates in win
-        self.player = player.Player((const.PLAYER_X, const.PLAYER_Y), const.PLAYER_SPEED, const.PLAYER_IMAGE_PATH)
-
-        # initialise columns and barriers inside
-        self.init_columns()
+        player_coordinates = (config.player['start_x_coord'], config.player['start_y_coord'])
+        self.player = player.Player(player_coordinates, config.player['speed'], config.player['image'])
 
     # refresh all screen updates
     def refresh(self):
         pygame.display.update()
-        self.bg.set_background(self.surface)
+        self.bg.set(self.surface)
 
     # main loop of the window
-    def start_mainloop(self, fps: int):
+    def start_mainloop(self):
         clock = pygame.time.Clock()
+        player_max_x = config.window['width'] - config.player['width']
+        player_min_x = config.player['width']
 
         while True:
             self.check_for_end()
 
-            self.move_barriers()
-            self.present_columns()
-
             # player movement
-            self.player.move(const.MIN_X, const.MAX_X)
+            self.player.move(player_min_x, player_max_x)
             self.player.draw(self.surface)
             self.refresh()
 
             # set a delay
-            clock.tick(fps)
-
-    # initialise columns list
-    def init_columns(self):
-        for column in self.columns:
-            if random.randint(0, 2) == 1:
-                column.set_barrier(barrier.Barrier())
-                column.barrier.init_type(const.BARRIERS_LIST, const.BARRIERS_WIDTH)
-
-    # method moves every barrier down with defined speed
-    def move_barriers(self):
-        for column in self.columns:
-            if not column.is_free:
-                column.barrier.fall_down()
-
-    # method present every barrier in defined coordinates
-    def present_columns(self):
-        for column in self.columns:
-            if not column.is_free:
-                column.draw_barrier(self.surface)
+            clock.tick(config.window['fps'])
 
     # check if event is close game
     @staticmethod

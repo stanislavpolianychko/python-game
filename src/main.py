@@ -1,5 +1,5 @@
 import game_window
-import constants as const
+from configuration.config import config
 
-win = game_window.Window((const.WIDTH, const.HEIGHT), const.LABEL)
-win.start_mainloop(const.FPS)
+win = game_window.Window((config.window['width'], config.window['height']), config.window['label'])
+win.start_mainloop()

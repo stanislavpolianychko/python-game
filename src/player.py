@@ -3,7 +3,6 @@ import pygame
 
 class Player:
     def __init__(self, coordinates: (int, int), speed: int, image_path: str):
-        # initialise player params
         self.speed = speed
         self.image = pygame.image.load(image_path)
         self.player_x, self.player_y = coordinates

@@ -2,7 +2,7 @@ from configuration.config import config
 import pygame
 import player
 import background
-import barriers_handler
+import barriers_handler as bh
 
 
 class Window:
@@ -19,7 +19,7 @@ class Window:
         # player instance
         self.__player = player.Player()
         # list with all barriers instances
-        self.__barriers_handler = barriers_handler.BarriersHandler()
+        self.__barriers_handler = bh.BarriersHandler()
 
     # check if event is close game
     @staticmethod
@@ -42,6 +42,8 @@ class Window:
 
             self.__player.move()
             self.__player.draw(self.__surface)
+            self.__barriers_handler.update_barriers_list()
+            self.__barriers_handler.present_barriers(self.__surface)
             self.__refresh()
 
             # set a delay

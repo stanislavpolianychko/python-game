@@ -1,14 +1,31 @@
+from configuration.config import config
 import random
 import pygame
 
 
 class Barrier:
-    def __init__(self, image_path_list: list, image_width: int):
-        self.bar_type = random.randint(0, 2)
-        self.image = pygame.image.load([image_path_list[self.bar_type]])
-        self.image_w = image_width
-        self.position_x = 0
-        self.speed = random.randint(5, 10)
+    def __init__(self):
+        self.__coord_x = random.randint(0, config.window['width'] - config.barrier['width'])
+        self.__coord_y = 0
 
-    def fall_down(self):
-        self.position_x += self.speed
+        self.__image = self.__init_type()
+
+    @property
+    def coordinates(self):
+        return self.__coord_x, self.__coord_y
+
+    @property
+    def is_actual(self):
+        if self.__coord_y >= config.window['height'] - config.barrier['height']:
+            return False
+        return True
+
+    def __init_type(self):
+        if self.__image:
+            return
+        paths = (config.barrier['image1'], config.barrier['image2'], config.barrier['image3'], config.barrier['image4'])
+        image_path = random.choice(paths)
+        return pygame.image.load(image_path)
+
+    def move_down(self):
+        self.__coord_y += config.barrier['speed']

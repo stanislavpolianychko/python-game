@@ -3,6 +3,7 @@ import pygame
 
 
 class Player:
+    """Class of player instance."""
     def __init__(self):
         self.__speed = config.player['speed']
         self.__image = pygame.image.load(config.player['image'])

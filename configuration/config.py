@@ -3,7 +3,7 @@ from configparser import ConfigParser
 
 class Configuration:
     """Singleton class for getting configuration parameters
-                    form defined file"""
+                    from defined file."""
     __instance = None
 
     def __new__(cls, *args, **kwargs):
@@ -43,6 +43,21 @@ class Configuration:
     @property
     def window(self):
         return self.__get_section_dict('window')
+
+    @property
+    def game(self):
+        return self.__get_section_dict('game')
+
+    @property
+    def menu(self):
+        return self.__get_section_dict('menu')
+
+    @property
+    def loading(self):
+        return self.__get_section_dict('loading')
+
+    def ending(self):
+        return self.__get_section_dict('ending')
 
 
 config = Configuration('configuration/config.ini')

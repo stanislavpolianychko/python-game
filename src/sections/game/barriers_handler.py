@@ -1,4 +1,4 @@
-import barrier
+from src.sections.game import barrier
 from configuration.config import config
 
 

@@ -1,4 +1,4 @@
-import game_window
+import window
 
-win = game_window.Window()
-win.start_game()
+win = window.Window()
+win.run()

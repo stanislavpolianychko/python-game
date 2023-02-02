@@ -7,15 +7,15 @@ class Barrier:
     """Class of barrier, which initialise with
         random image, speed and coordinates"""
     def __init__(self):
-        self.__coord_x = random.randint(0, config.window['width'] - config.barrier['width'])
-        self.__coord_y = -config.barrier['height']
-        self.__speed = random.randint(config.barrier['min_speed'], config.barrier['max_speed'])
+        self._coord_x = random.randint(0, config.window['width'] - config.barrier['width'])
+        self._coord_y = -config.barrier['height']
+        self._speed = random.randint(config.barrier['min_speed'], config.barrier['max_speed'])
 
-        self.__image = self.__init_type()
+        self._image = self._init_type()
 
     # generate random image of barrier
     @staticmethod
-    def __init_type():
+    def _init_type():
         paths = (config.barrier['image1'], config.barrier['image2'], config.barrier['image3'])
         image_path = random.choice(paths)
         return pygame.image.load(image_path)
@@ -44,20 +44,20 @@ class Barrier:
     # show barriers coordinates tuple
     @property
     def coordinates(self):
-        return self.__coord_x, self.__coord_y
+        return self._coord_x, self._coord_y
 
     # is barrier in window range
     @property
     def is_actual(self):
-        if self.__coord_y >= config.window['height']:
+        if self._coord_y >= config.window['height']:
             return False
         return True
 
     # move barrier down
     def move_down(self):
-        self.__coord_y += self.__speed
+        self._coord_y += self._speed
 
     # present barrier in window
     def draw(self, surface):
-        surface.blit(self.__image, self.coordinates)
+        surface.blit(self._image, self.coordinates)
 

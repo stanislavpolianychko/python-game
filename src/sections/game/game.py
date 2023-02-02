@@ -2,7 +2,6 @@ from configuration.config import config
 from src.sections.game.player import Player
 from src.sections.game.barriers_handler import BarriersHandler
 from src.sections.screen_section import ScreenSection
-import pygame
 
 
 class Game(ScreenSection):
@@ -10,7 +9,6 @@ class Game(ScreenSection):
         super().__init__(surface, bg_image)
         self._player = Player()
         self._barriers_handler = BarriersHandler()
-        self._clock = pygame.time.Clock()
 
     # check if player haven't crashed on barrier
     def _review_win(self):
@@ -43,4 +41,4 @@ class Game(ScreenSection):
 
             self._refresh()
 
-            self._clock.tick(config.game['fps'])
+            self._clock.tick(config.window['fps'])

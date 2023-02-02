@@ -1,12 +1,13 @@
 import pygame
-from src.sections import background
+from src.sections.background import Background
 
 
 class ScreenSection:
     # check if event is close game
     def __init__(self, surface, bg_image):
         self._surface = surface
-        self._bg = background.Background(bg_image)
+        self._bg = Background(bg_image)
+        self._clock = pygame.time.Clock()
 
     @staticmethod
     def _check_for_exit():
